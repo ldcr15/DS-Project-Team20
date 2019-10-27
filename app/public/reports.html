@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>Reports</title>
+  <meta charset="utf-8">
+  <title>Oconee Country Fire Department</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="#"></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="index.html">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="data_entry.html">Enter Data</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="details.html">Details</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="reports.html">Reports</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="AssignCertificate.html">Assign Certificate</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+
+
+  <div id="expiredCertificationApp" class="container">
+    <h2>Expired Certifications</h2>
+
+    <div class="filter">
+      <select v-model="filter.certName">
+        <option value=''>(all)</option>
+        <option value='AED'>AED</option>
+        <option value='First Aid'>First Aid</option>
+        <option value='CPR'>CPR</option>
+        <option value='EMT'>EMT</option>
+      </select>
+    </div>
+    <table class="table table-sm table-hover table-bordered ">
+    <thead class="thead-dark">
+      <tr class = "tablerow">
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Certifcation</th>
+        <th>Certifying Agency</th>
+        <th>Expiration Date (YYYY-MM-DD)</th>
+      </thead>
+
+      <tbody>
+        <tr v-for="certification in certifications" @click="handleRowClick(certification)"
+        v-show="filter.certName =='' || filter.certName == certification.certificationName">
+          <td>{{certification.firstName}}</td>
+          <td>{{certification.lastName}}</td>
+          <td>{{certification.certificationName}}</td>
+          <td>{{certification.certifyingAgency}}</td>
+          <td>{{certification.expirationDate}}</td>
+        </tr>
+      </tbody>
+      </table>
+</div>
+
+
+<div id="membersApp" class="container">
+      <h2>Member's List</h2>
+      <table class="table table-sm table-hover table-bordered ">
+      <thead class="thead-dark">
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Station Number</th>
+          <th>Radio Number</th>
+          <th>Email Address</th>
+        </thead>
+        <tbody>
+          <tr v-for="member in members">
+            <td>{{member.firstName}}</td>
+            <td>{{member.lastName}}</td>
+            <td>{{member.stationNumber}}</td>
+            <td>{{member.radioNumber}}</td>
+            <td>{{member.email}}</td>
+          </tr>
+
+        </tbody>
+      </table>
+</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="js/expiredCertifications.app.js"></script>
+    <script src="js/members.app.js"></script>
+
+</body>
+
+</html>

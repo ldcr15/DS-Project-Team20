@@ -1,0 +1,209 @@
+<!doctype html>
+<html>
+<head>
+  <title>DataEntry</title>
+  <link rel="stylesheet" href="css\style.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="#"></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="index.html">Home</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="data_entry.html">Enter Data</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="details.html">Details</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="reports.html">Reports</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="AssignCertificate.html">Assign Certificate</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+<div>
+      <div id="membersApp" class="col-sm-12 col-md-12 col-lg-12">
+        <h2>Members</h2>
+        <table id="taskTable" class="table table-sm table-hover table-bordered ">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Member ID</th>
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">Radio number</th>
+            <th scope="col">Station number</th>
+            <th scope="col">Active (yes/no?)</th>
+            <th scope="col">Address</th>
+            <th scope="col">Email</th>
+            <th scope="col">Gender</th>
+            <th scope="col">Position</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="member in members" @click="handleRowClick(member)">
+            <div id="delete_membersApp">
+            <form>
+              <td>{{member.memberId}}</td>
+              <td>{{member.firstName}}</td>
+              <td>{{member.lastName}}</td>
+              <td>{{member.radioNumber}}</td>
+              <td>{{member.stationNumber}}</td>
+              <td>{{member.isActive}}</td>
+              <td>{{member.address}}</td>
+              <td>{{member.email}}</td>
+              <td>{{member.gender}}</td>
+              <td>{{member.position}}</td>
+            </form>
+          </div>
+          </tr>
+        </tbody>
+      </table>
+      <form><button id="aButton" type="button" class="btn btn-dark" onclick="addFunction()">Add member</button></form>
+      <form @submit.prevent="handleSubmit">
+        <div class="card mb-3" >
+          <div id="myDIV" class="card-body" style="display:none">
+            <span class="float-right" style="cursor:pointer"></span>
+            <h4 class="card-title"> Add New Member</h4>
+            <div>
+              <input type="text" class="form-control mb-2" placeholder="First Name" v-model="newMember.firstName" >
+              <input type="text" class="form-control mb-2" placeholder="Last Name" v-model="newMember.lastName" >
+              <input type="text" class="form-control mb-2" placeholder="Radio Number" v-model="newMember.radioNumber" >
+              <input type="text" class="form-control mb-2" placeholder="Station Number" v-model="newMember.stationNumber" >
+              <input type="text" class="form-control mb-2" placeholder="Active?" v-model="newMember.isActive" >
+              <input type="text" class="form-control mb-2" placeholder="Address" v-model="newMember.address" >
+              <input type="text" class="form-control mb-2" placeholder="Email" v-model="newMember.email" >
+              <input type="text" class="form-control mb-2" placeholder="Gender" v-model="newMember.gender" >
+              <input type="text" class="form-control mb-2" placeholder="Position" v-model="newMember.position" >
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+  </div>
+</div>
+</div>
+  </div>
+</div>
+<div>
+  <div class="col-sm-12 col-md-12 col-lg-12"><form><button id="emButton" type="button" class="btn btn-primary" onclick="editExistingFunction()">Edit Existing Members</button></form></div>
+    <div id="edit_membersApp" class="cik-sm-12 col-md-12 col-lg-12" style=display:none>
+    <!-- style=display:none"> -->
+    <form @submit.prevent="handleSubmit">
+
+      <div class="card mb-3" >
+        <div class="card-body">
+          <span class="float-right" style="cursor:pointer"></span>
+          <h4 class="card-title">Edit Member</h4>
+          <h6 class="card-subtitle"style="cursor:pointer">Click On a Row to Begin Editing</h6>
+        </br>
+          <div>
+            <label>First Name</label><input type="text" class="form-control mb-2" placeholder="First Name" v-model="employee.firstName" >
+            <input type="text" class="form-control mb-2" placeholder="Last Name" v-model="employee.lastName" >
+            <input type="text" class="form-control mb-2" placeholder="Radio Number" v-model="employee.radioNumber" >
+            <input type="text" class="form-control mb-2" placeholder="Station Number" v-model="employee.stationNumber" >
+            <input type="text" class="form-control mb-2" placeholder="Active?" v-model="employee.isActive" >
+            <input type="text" class="form-control mb-2" placeholder="Address" v-model="employee.address" >
+            <input type="text" class="form-control mb-2" placeholder="Email" v-model="employee.email" >
+            <input type="text" class="form-control mb-2" placeholder="Gender" v-model="employee.gender" >
+            <input type="text" class="form-control mb-2" placeholder="Position" v-model="employee.position" >
+            <form @submit.prevent="handleSubmit"><button type="submit" class="btn btn-primary">Submit Edits</button></form>
+            <br></br>
+            <form @submit.prevent="handleDelete"><button type="submit" class="btn btn-danger">Delete Member</button></form>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+    <div>
+    <div id = certificationApp class="col-sm-12 col-md-12 col-lg-12">
+      <h2>Certifications</h2>
+      <table id="taskTable" class="table table-sm table-hover table-bordered ">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Certification</th>
+          <th scope="col">Certifying agency</th>
+          <th scope="col">Certification period</th>
+          <th scope="col">Certifying Agency</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr  v-for="certification in certifications" @click="handleRowClick(certification)">
+          <div id = "delete_certificationsApp">
+          <form>
+          <td>{{ certification.certificationId }}</td>
+          <td>{{ certification.certificationName }}</td>
+          <td>{{ certification.experationPeriod }}</td>
+          <td>{{ certification.certifyingAgency }}</td>
+        </form>
+      </div>
+        </tr>
+      </tbody>
+    </table>
+    <form><button id="ebutton" type="button" class="btn btn-primary" onclick="myFunction()">Add Certificate</button></form>
+    <form @submit.prevent="handleSubmit">
+      <div class="card mb-3" >
+        <div id="certificationDIV" class="card-body" style="display:none">
+          <span class="float-righ
+
+
+
+
+          t" style="cursor:pointer"></span>
+          <h4 class="card-title"> Add New Certificate</h4>
+          <div class="employee-form">
+            <input type="text" class="form-control mb-2" placeholder="Certification Name" v-model="newCertification.certificationName" >
+            <input type="text" class="form-control mb-2" placeholder="Expiration Period" v-model="newCertification.experationPeriod" >
+            <input type="text" class="form-control mb-2" placeholder="Certifying Agency" v-model="newCertification.certifyingAgency" >
+            <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+</div>
+</div>
+</div>
+
+<div><form><button id="ecButton" type="button" class="btn btn-dark" onclick="editExistingCertFunction()">Edit Existing Certificates</button></form></div>
+<div id="edit_certificateApp">
+  <div id="eCert" class="card mb-4" style=display:none>
+  <div class="card mb-4" >
+    <div class="card-body">
+
+      <span class="float-left" style="cursor:pointer"></span>
+      <h4 class="card-title">Edit Certification</h4>
+      <div>
+        <!-- <label>Entry</label><input type="text" class="form-control mb-3" placeholder="First Name" v-model="certificate.certificationId" > -->
+        <input type="text" class="form-control mb-3" placeholder="Certification Name" v-model="certificate.certificationName" >
+        <input type="text" class="form-control mb-3" placeholder="Expiration Period" v-model="certificate.experationPeriod" >
+        <input type="text" class="form-control mb-3" placeholder="Certifying Agency" v-model="certificate.certifyingAgency" >
+        <form @submit.prevent="handleSubmit"><button type="submit" class="btn btn-primary">Submit Edits</button></form>
+    <br>  </br>
+        <form @submit.prevent="handleDelete"><button type="submit" class="btn btn-danger">Delete Certificate</button></form>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<div class="footer">
+  Oconee County Fire Rescue|Oconee County, GA
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="js/members.app.js"></script>
+<script src="js/certifications.app.js"></script>
+<script src="js/edit_members.app.js"></script>
+<script src="js/delete_members.app.js"></script>
+<script src="js/delete_certifications.app.js"></script>
+<script src="js/edit_certificate.app.js"></script>
+
+
+</body>
+</html>
